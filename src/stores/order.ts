@@ -20,7 +20,7 @@ const initialOrderData: Order = {
 
 export const useOrderStore = defineStore('order', {
   state: () => ({
-    order: initialOrderData as Order,
+    order: initialOrderData,
   }),
   actions: {
     setOrder(newOrder: Order) {

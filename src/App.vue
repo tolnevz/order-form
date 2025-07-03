@@ -13,12 +13,12 @@
   const orderStore = useOrderStore();
   const isEditing = ref(false);
   const showValidationErrors = ref(false);
-  const editableOrder = reactive<Order>(JSON.parse(JSON.stringify(orderStore.order)));
+  const editableOrder = reactive<Order>(orderStore.order);
   const statuses = Object.values(Status);
 
   onMounted(() => {
     orderStore.loadOrder();
-    Object.assign(editableOrder, JSON.parse(JSON.stringify(orderStore.order)));
+    Object.assign(editableOrder, orderStore.order);
   });
 
   const toggleMode = () => {
@@ -27,10 +27,10 @@
 
     isEditing.value = !isEditing.value;
     if (isEditing.value) {
-      Object.assign(editableOrder, JSON.parse(JSON.stringify(orderStore.order)));
+      Object.assign(editableOrder, orderStore.order);
       showValidationErrors.value = false;
     } else {
-      Object.assign(editableOrder, JSON.parse(JSON.stringify(orderStore.order)));
+      Object.assign(editableOrder, orderStore.order);
     }
   };
 
@@ -46,7 +46,7 @@
   const saveChanges = () => {
     showValidationErrors.value = true;
     if (validateForm()) {
-      orderStore.setOrder(JSON.parse(JSON.stringify(editableOrder)));
+      orderStore.setOrder(editableOrder);
       isEditing.value = false;
     } else {
       alert('Пожалуйста, заполните все обязательные поля.');
@@ -57,7 +57,7 @@
     const isResetOrder = orderStore.confirmReset(editableOrder);
     if (!isResetOrder) return;
 
-    Object.assign(editableOrder, JSON.parse(JSON.stringify(orderStore.order)));
+    Object.assign(editableOrder, orderStore.order);
     isEditing.value = false;
     showValidationErrors.value = false;
   };
